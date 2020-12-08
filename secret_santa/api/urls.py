@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import main
+from .views import PartyView
 
-urlpatterns= [
-    path('home', main)
+urlpatterns = [
+    path('party', PartyView.as_view()),
 ]
