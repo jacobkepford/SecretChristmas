@@ -1,6 +1,7 @@
-from django.db import models
 import string
 import random
+from django.db import models
+
 # Create your models here.
 
 
@@ -16,7 +17,7 @@ def generate_unique_code():
 
 
 class Party(models.Model):
-    code = models.CharField(max_Length=8, default="", unique=True)
-    host = models.CharField(max_Length=50, unique=True)
+    code = models.CharField(max_length=8, default="", unique=True)
+    host = models.CharField(max_length=50, unique=True)
     enable_wishlist = models.BooleanField(null=False, default=False)
     date_created = models.DateTimeField(auto_now_add=True)
