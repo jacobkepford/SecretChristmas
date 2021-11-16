@@ -1,0 +1,50 @@
+﻿@page "/party"
+@using SecretChristmas.Shared
+@inject HttpClient Http
+
+<PageTitle>Party</PageTitle>
+
+<h1>Party List</h1>
+
+<p>List of all of our current scheduled parties.</p>
+
+@if (parties == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Party ID</th>
+                <th>Party Name</th>
+                <th>Host First Name</th>
+                <th>Host Last Name</th>
+                <th>Party Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Party party in parties)
+            {
+                <tr>
+                    <td>@party.PartyID</td>
+                    <td>@party.PartyName</td>
+                    <td>@party.PartyHost.FirstName</td>
+                    <td>@party.PartyHost.LastName</td>
+                    <td>@party.PartyDate.ToShortDateString()</td>
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Party[]? parties;
+
+    protected override async Task OnInitializedAsync()
+    {
+        parties = await Http.GetFromJsonAsync<Party[]>("Home");
+    }
+}
