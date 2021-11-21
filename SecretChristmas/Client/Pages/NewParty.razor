@@ -1,8 +1,8 @@
-﻿@page "/editparty/{id:int}"
+﻿@page "/newparty"
 @inject HttpClient Http
 @inject NavigationManager UriHelper
 
-<h3>EditParty</h3>
+<h3>New Party</h3>
 
 <EditForm Model="@party" OnValidSubmit="@HandleValidSubmit">
     <DataAnnotationsValidator />
@@ -12,6 +12,18 @@
         <label>
             Party Name:
             <InputText @bind-Value="party.PartyName" />
+        </label>
+    </p>
+    <p>
+        <label>
+            Party Host First Name:
+            <InputText @bind-Value="party.PartyHost.FirstName" />
+        </label>
+    </p>
+    <p>
+        <label>
+            Party Host Last Name:
+            <InputText @bind-Value="party.PartyHost.LastName" />
         </label>
     </p>
     <p>
@@ -27,26 +39,14 @@
     </div>
 </EditForm>
 
-
 @code {
-    [Parameter]
-    public int id { get; set; }
 
     private Party party = new();
 
-    protected override async Task OnInitializedAsync()
-    {
-        party = await Http.GetFromJsonAsync<Party>("Home/" + id);
-    }
-
     public async void HandleValidSubmit()
     {
-        var result = await Http.PutAsJsonAsync("Home/" + id, party);
-        if (result != null)
-        {
-            UriHelper.NavigateTo("party");
-        }
-        
+        await Http.PostAsJsonAsync("Home", party);
+        UriHelper.NavigateTo("party");
     }
 
     public void CancelForm()

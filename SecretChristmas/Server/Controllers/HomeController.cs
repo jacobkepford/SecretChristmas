@@ -56,6 +56,13 @@ namespace SecretChristmas.Server.Controllers
             return selectedParty;
         }
 
+        [HttpPost]
+        public async void Add(Party party)
+        {
+            party.PartyID = PartyList.Max(s => s.PartyID + 1);
+            PartyList.Add(party);
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(Party party, int id)
         {

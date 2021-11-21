@@ -7,6 +7,7 @@
 <h1>Party List</h1>
 
 <p>List of all of our current scheduled parties.</p>
+<button @onclick=NewParty>Add Party</button>
 
 @if (parties == null)
 {
@@ -52,6 +53,11 @@ else
     {
         parties = await Http.GetFromJsonAsync<Party[]>("Home");
         OnChange += StateHasChanged;
+    }
+
+    public void NewParty()
+    {
+        UriHelper.NavigateTo($"newparty");
     }
 
     public void Edit(int id)
