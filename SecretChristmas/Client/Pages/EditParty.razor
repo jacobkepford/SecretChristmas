@@ -1,26 +1,32 @@
 ﻿@page "/editparty/{id:int}"
 @inject HttpClient Http
+@inject NavigationManager UriHelper
 
 <h3>EditParty</h3>
 
-<form>  
-    <div class="row">  
-        <div class="col-md-8">  
-            <div class="form-group">  
-                <label for="Name" class="control-label">Party Name</label>  
-                <input for="Name" class="form-control" @bind="@party.PartyName" />  
-            </div>  
-            <div class="form-group">  
-                <label for="Department" class="control-label">First Name</label>  
-                <input for="Department" class="form-control" @bind="@party.PartyHost.FirstName" />  
-            </div>  
-            <div class="form-group">  
-                <label for="Designation" class="control-label">Last Name</label>  
-                <input for="Designation" class="form-control" @bind="@party.PartyHost.LastName" />  
-            </div>
-        </div>
+<EditForm Model="@party" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <p>
+        <label>
+            Party Name:
+            <InputText @bind-Value="party.PartyName" />
+        </label>
+    </p>
+    <p>
+        <label>
+            Party Date:
+            <InputDate @bind-Value="party.PartyDate">
+            </InputDate>
+        </label>
+    </p>
+    <div>
+        <button @onclick="CancelForm">Cancel</button>
+        <button type="submit">Submit</button>
     </div>
-</form>
+    
+</EditForm>
 
 
 @code {
@@ -32,6 +38,21 @@
     protected override async Task OnInitializedAsync()
     {
         party = await Http.GetFromJsonAsync<Party>("Home/" + id);
+    }
+
+    public async void HandleValidSubmit()
+    {
+        var result = await Http.PutAsJsonAsync("Home/" + id, party);
+        if (result != null)
+        {
+            UriHelper.NavigateTo("party");
+        }
+        
+    }
+
+    public void CancelForm()
+    {
+        UriHelper.NavigateTo("party");
     }
 
 }

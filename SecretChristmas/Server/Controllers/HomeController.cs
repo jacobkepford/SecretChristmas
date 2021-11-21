@@ -55,5 +55,14 @@ namespace SecretChristmas.Server.Controllers
             Party selectedParty = PartyList.FirstOrDefault(s => s.PartyID == id);
             return selectedParty;
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Party party, int id)
+        {
+            Party selectedParty = PartyList.FirstOrDefault(s => s.PartyID == id);
+            selectedParty.PartyName = party.PartyName;
+            selectedParty.PartyDate = party.PartyDate;
+            return Ok(party);
+        }
     }
 }
