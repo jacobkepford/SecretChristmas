@@ -1,0 +1,74 @@
+﻿@page "/userlist"
+@inject HttpClient Http
+@inject NavigationManager UriHelper
+
+<PageTitle>User List</PageTitle>
+
+<h1>List of users</h1>
+
+<button @onclick=NewUser>Add User</button>
+
+@if (partyGuests == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th>Party Guest ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (PartyGuest partyGuest in partyGuests)
+            {
+                <tr>
+                    <td><button @onclick="() => Edit(partyGuest.PartyGuestID)">Edit</button></td>
+                    <td><button @onclick="(() => Delete(partyGuest.PartyGuestID))">Delete</button></td>
+                    <td>@partyGuest.PartyGuestID</td>
+                    <td>@partyGuest.FirstName</td>
+                    <td>@partyGuest.LastName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private PartyGuest[]? partyGuests;
+    public event Action OnChange;
+
+    protected override async Task OnInitializedAsync()
+    {
+        partyGuests = await Http.GetFromJsonAsync<PartyGuest[]>("PartyGuest");
+        OnChange += StateHasChanged;
+    }
+
+    public void NewUser()
+    {
+        UriHelper.NavigateTo($"newpartyguest");
+    }
+
+    public void Edit(int id)
+    {
+        UriHelper.NavigateTo($"editpartyguest/{id}");
+    }
+
+    public async void Delete(int id)
+    {
+        await Http.DeleteAsync($"PartyGuest/{id}");
+        partyGuests = await Http.GetFromJsonAsync<PartyGuest[]>("PartyGuest");
+        OnChange.Invoke();
+    }
+
+    public void Dispose()
+    {
+        OnChange -= StateHasChanged;
+    }
+
+}
