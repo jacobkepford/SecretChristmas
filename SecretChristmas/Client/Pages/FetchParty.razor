@@ -18,6 +18,7 @@ else
         <thead>
             <tr>
                 <th></th>
+                <th></th>
                 <th>Party ID</th>
                 <th>Party Name</th>
                 <th>Host First Name</th>
@@ -29,7 +30,8 @@ else
             @foreach (Party party in parties)
             {
                 <tr>
-                    <td><a href='/editparty/@party.PartyID'>Edit</a></td>
+                    <td><button @onclick="() => Edit(party.PartyID)">Edit</button></td>
+                    <td><button @onclick="(() => Delete(party.PartyID))">Delete</button></td>
                     <td>@party.PartyID</td>
                     <td>@party.PartyName</td>
                     <td>@party.PartyHost.FirstName</td>
@@ -44,10 +46,29 @@ else
 
 @code {
     private Party[]? parties;
+    public event Action OnChange;
 
     protected override async Task OnInitializedAsync()
     {
         parties = await Http.GetFromJsonAsync<Party[]>("Home");
+        OnChange += StateHasChanged;
+    }
+
+    public void Edit(int id)
+    {
+        UriHelper.NavigateTo($"editparty/{id}");
+    }
+
+    public async void Delete(int id)
+    {
+        await Http.DeleteAsync($"Home/{id}");
+        parties = await Http.GetFromJsonAsync<Party[]>("Home");
+        OnChange.Invoke();
+    }
+
+    public void Dispose()
+    {
+        OnChange -= StateHasChanged;
     }
 
 }

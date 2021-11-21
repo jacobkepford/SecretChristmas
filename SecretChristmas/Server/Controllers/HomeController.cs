@@ -64,5 +64,12 @@ namespace SecretChristmas.Server.Controllers
             selectedParty.PartyDate = party.PartyDate;
             return Ok(party);
         }
+
+        [HttpDelete("{id}")]
+        public async Task Delete(int id)
+        {
+            Party selectedParty = PartyList.FirstOrDefault(s => s.PartyID == id);
+            PartyList.Remove(selectedParty);
+        }
     }
 }
