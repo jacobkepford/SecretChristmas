@@ -27,7 +27,7 @@
     [Parameter]
     public int id { get; set; }
 
-    private Party party = new Party { PartyHost = new PartyGuest() };
+    private Party party = new();
 
     protected override async Task OnInitializedAsync()
     {

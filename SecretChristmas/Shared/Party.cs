@@ -10,7 +10,7 @@ namespace SecretChristmas.Shared
     {
         public int PartyID { get; set; }
         public string PartyName { get; set; }
-        public PartyGuest PartyHost { get; set; }
+        public PartyGuest PartyHost { get; set; } = new PartyGuest();
         public DateTime PartyDate { get; set; }
     }
 }
