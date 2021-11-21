@@ -5,9 +5,9 @@ namespace SecretChristmas.Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class HomeController : ControllerBase
+    public class PartyController : ControllerBase
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<PartyController> _logger;
 
         private static PartyGuest host1 = new()
         {
@@ -37,7 +37,7 @@ namespace SecretChristmas.Server.Controllers
             new Party { PartyID = 3, PartyName = "Marty Grinchmas", PartyHost = host3, PartyDate = new DateTime(2021, 12, 12) }
         };
 
-        public HomeController(ILogger<HomeController> logger)
+        public PartyController(ILogger<PartyController> logger)
         {
             _logger = logger;
 

@@ -34,7 +34,7 @@
         </label>
     </p>
     <div>
-        <CancelButton page="party"></CancelButton>
+        <CancelButton page="partylist"></CancelButton>
         <button type="submit">Submit</button>
     </div>
 </EditForm>
@@ -45,7 +45,7 @@
 
     public async void HandleValidSubmit()
     {
-        await Http.PostAsJsonAsync("Home", party);
-        UriHelper.NavigateTo("party");
+        await Http.PostAsJsonAsync("Party", party);
+        UriHelper.NavigateTo("partylist");
     }
 }

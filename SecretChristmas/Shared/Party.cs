@@ -14,6 +14,6 @@ namespace SecretChristmas.Shared
         public string PartyName { get; set; }
         public PartyGuest PartyHost { get; set; } = new PartyGuest();
         [Required]
-        public DateTime PartyDate { get; set; }
+        public DateTime PartyDate { get; set; } = DateTime.Now;
     }
 }

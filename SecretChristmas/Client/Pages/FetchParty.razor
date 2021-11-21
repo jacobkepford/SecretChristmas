@@ -1,4 +1,4 @@
-﻿@page "/party"
+﻿@page "/partylist"
 @inject HttpClient Http
 @inject NavigationManager UriHelper
 
@@ -51,7 +51,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        parties = await Http.GetFromJsonAsync<Party[]>("Home");
+        parties = await Http.GetFromJsonAsync<Party[]>("Party");
         OnChange += StateHasChanged;
     }
 
@@ -67,8 +67,8 @@ else
 
     public async void Delete(int id)
     {
-        await Http.DeleteAsync($"Home/{id}");
-        parties = await Http.GetFromJsonAsync<Party[]>("Home");
+        await Http.DeleteAsync($"Party/{id}");
+        parties = await Http.GetFromJsonAsync<Party[]>("Party");
         OnChange.Invoke();
     }
 
