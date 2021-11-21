@@ -22,7 +22,7 @@
         </label>
     </p>
     <div>
-        <button @onclick="CancelForm">Cancel</button>
+        <CancelButton page="party"></CancelButton>
         <button type="submit">Submit</button>
     </div>
 </EditForm>
@@ -48,10 +48,4 @@
         }
         
     }
-
-    public void CancelForm()
-    {
-        UriHelper.NavigateTo("party");
-    }
-
 }

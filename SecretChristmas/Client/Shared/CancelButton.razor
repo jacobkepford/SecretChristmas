@@ -1,0 +1,13 @@
+﻿@inject NavigationManager UriHelper
+
+<button @onclick="CancelForm">Cancel</button>
+
+@code {
+    [Parameter]
+    public string Page { get; set; }
+
+    public void CancelForm()
+    {
+        UriHelper.NavigateTo(Page);
+    }
+}
