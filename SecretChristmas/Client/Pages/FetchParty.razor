@@ -29,7 +29,7 @@ else
             @foreach (Party party in parties)
             {
                 <tr>
-                    <td><button @onclick=@Navigate>Edit</button></td>
+                    <td><a href='/editparty/@party.PartyID'>Edit</a></td>
                     <td>@party.PartyID</td>
                     <td>@party.PartyName</td>
                     <td>@party.PartyHost.FirstName</td>
@@ -50,8 +50,4 @@ else
         parties = await Http.GetFromJsonAsync<Party[]>("Home");
     }
 
-    void Navigate()
-    {
-        UriHelper.NavigateTo("Counter");
-    }
 }
