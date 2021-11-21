@@ -1,6 +1,6 @@
 ﻿@page "/party"
-@using SecretChristmas.Shared
 @inject HttpClient Http
+@inject NavigationManager UriHelper
 
 <PageTitle>Party</PageTitle>
 
@@ -17,6 +17,7 @@ else
     <table class="table">
         <thead>
             <tr>
+                <th></th>
                 <th>Party ID</th>
                 <th>Party Name</th>
                 <th>Host First Name</th>
@@ -28,6 +29,7 @@ else
             @foreach (Party party in parties)
             {
                 <tr>
+                    <td><button @onclick=@Navigate>Edit</button></td>
                     <td>@party.PartyID</td>
                     <td>@party.PartyName</td>
                     <td>@party.PartyHost.FirstName</td>
@@ -46,5 +48,10 @@ else
     protected override async Task OnInitializedAsync()
     {
         parties = await Http.GetFromJsonAsync<Party[]>("Home");
+    }
+
+    void Navigate()
+    {
+        UriHelper.NavigateTo("Counter");
     }
 }
