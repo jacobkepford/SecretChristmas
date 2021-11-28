@@ -1,24 +1,24 @@
-﻿@page "/editparty/{id:int}"
+﻿@page "/edituser/{id:int}"
 @inject HttpClient Http
 @inject NavigationManager UriHelper
 
-<h3>Edit Party</h3>
+<h3>Edit User</h3>
 
-<EditForm Model="@party" OnValidSubmit="@HandleValidSubmit">
+<EditForm Model="@partyGuest" OnValidSubmit="@HandleValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
     <p>
         <label>
-            Party Name:
-            <InputText @bind-Value="party.PartyName" />
+            First Name:
+            <InputText @bind-Value="partyGuest.FirstName" />
         </label>
     </p>
     <p>
         <label>
-            Party Date:
-            <InputDate @bind-Value="party.PartyDate">
-            </InputDate>
+            First Name:
+            <InputText @bind-Value="partyGuest.LastName">
+            </InputText>
         </label>
     </p>
     <div>
@@ -32,19 +32,19 @@
     [Parameter]
     public int id { get; set; }
 
-    private Party party = new();
+    private PartyGuest partyGuest = new();
 
     protected override async Task OnInitializedAsync()
     {
-        party = await Http.GetFromJsonAsync<Party>("Party/" + id);
+        partyGuest = await Http.GetFromJsonAsync<PartyGuest>("PartyGuest/" + id);
     }
 
     public async void HandleValidSubmit()
     {
-        var result = await Http.PutAsJsonAsync("Party/" + id, party);
+        var result = await Http.PutAsJsonAsync("PartyGuest/" + id, partyGuest);
         if (result != null)
         {
-            UriHelper.NavigateTo("partylist");
+            UriHelper.NavigateTo("userlist");
         }
         
     }
