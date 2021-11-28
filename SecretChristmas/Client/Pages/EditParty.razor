@@ -21,20 +21,17 @@
             </InputDate>
         </label>
     </p>
-   @* <p>
+    <p>
         <label>
             Party Host:
-            <InputSelect @bind-Value=PartyGuest.PartyGuestID>
-
-            </InputSelect>
-            @foreach (PartyGuest guest in partyGuest)
+            <InputSelect @bind-Value="SelectedHostId">
+            @foreach (var partyGuest in partyGuests)
             {
-                
-
+                <option value="@partyGuest.PartyGuestID">@partyGuest.FullName</option>
             }
-            
+            </InputSelect>
         </label>
-    </p>*@
+    </p>
     <div>
         <CancelButton page="partylist"></CancelButton>
         <button type="submit">Submit</button>
@@ -45,6 +42,11 @@
 @code {
     [Parameter]
     public int id { get; set; }
+    private int SelectedHostId
+    {
+        get => party.PartyHost.PartyGuestID;
+        set => party.PartyHost = partyGuests.Single(c => c.PartyGuestID == value);
+    }
 
     private Party party = new();
     private List<PartyGuest> partyGuests = new();

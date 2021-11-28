@@ -8,7 +8,6 @@ namespace SecretChristmas.Server.Controllers
     public class PartyGuestController : ControllerBase
     {
         private readonly ILogger<PartyController> _logger;
-
         private static List<PartyGuest> PartyGuests = new()
         {
             new PartyGuest { PartyGuestID = 1, FirstName = "Jacob", LastName = "Kepford" },
@@ -19,7 +18,6 @@ namespace SecretChristmas.Server.Controllers
         public PartyGuestController(ILogger<PartyController> logger)
         {
             _logger = logger;
-
         }
 
         [HttpGet]

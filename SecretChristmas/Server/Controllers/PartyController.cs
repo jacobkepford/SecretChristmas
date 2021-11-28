@@ -68,6 +68,7 @@ namespace SecretChristmas.Server.Controllers
         {
             Party selectedParty = PartyList.FirstOrDefault(s => s.PartyID == id);
             selectedParty.PartyName = party.PartyName;
+            selectedParty.PartyHost = party.PartyHost;
             selectedParty.PartyDate = party.PartyDate;
             return Ok(party);
         }
