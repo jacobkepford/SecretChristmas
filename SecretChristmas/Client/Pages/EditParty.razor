@@ -21,6 +21,20 @@
             </InputDate>
         </label>
     </p>
+   @* <p>
+        <label>
+            Party Host:
+            <InputSelect @bind-Value=PartyGuest.PartyGuestID>
+
+            </InputSelect>
+            @foreach (PartyGuest guest in partyGuest)
+            {
+                
+
+            }
+            
+        </label>
+    </p>*@
     <div>
         <CancelButton page="partylist"></CancelButton>
         <button type="submit">Submit</button>
@@ -33,10 +47,12 @@
     public int id { get; set; }
 
     private Party party = new();
+    private List<PartyGuest> partyGuests = new();
 
     protected override async Task OnInitializedAsync()
     {
         party = await Http.GetFromJsonAsync<Party>("Party/" + id);
+        partyGuests = await Http.GetFromJsonAsync<List<PartyGuest>>("PartyGuest");
     }
 
     public async void HandleValidSubmit()

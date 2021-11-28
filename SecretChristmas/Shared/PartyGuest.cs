@@ -9,6 +9,12 @@ namespace SecretChristmas.Shared
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
-
+        public string FullName
+        {
+            get
+            {
+                return FirstName + " " + LastName;
+            }
+        }
     }
 }
