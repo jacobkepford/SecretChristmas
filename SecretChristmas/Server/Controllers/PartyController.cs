@@ -23,7 +23,7 @@ namespace SecretChristmas.Server.Controllers
 
         private static PartyGuest host3 = new()
         {
-            PartyGuestID = 1,
+            PartyGuestID = 3,
             PartyGuestName = "Marty Cat"
         };
 

@@ -24,7 +24,7 @@
     <p>
         <label>
             Party Host:
-            <InputSelect @bind-Value="SelectedHostId">
+            <InputSelect @bind-Value="party.PartyHost.PartyGuestID">
             @foreach (var partyGuest in partyGuests)
             {
                 <option value="@partyGuest.PartyGuestID">@partyGuest.PartyGuestName</option>
@@ -42,12 +42,7 @@
 @code {
     [Parameter]
     public int id { get; set; }
-    private int SelectedHostId
-    {
-        get => party.PartyHost.PartyGuestID;
-        set => party.PartyHost = partyGuests.Single(c => c.PartyGuestID == value);
-    }
-
+    
     private Party party = new();
     private List<PartyGuest> partyGuests = new();
 
@@ -59,11 +54,7 @@
 
     public async void HandleValidSubmit()
     {
-        var result = await Http.PutAsJsonAsync("Party/" + id, party);
-        if (result != null)
-        {
-            UriHelper.NavigateTo("partylist");
-        }
-        
+        await Http.PutAsJsonAsync("Party/" + id, party);
+        UriHelper.NavigateTo("partylist");
     }
 }
