@@ -26,6 +26,8 @@
     public int id { get; set; }
 
     private PartyGuest partyGuest = new();
+    private List<PartyGuest> partyGuests = new();
+    private List<Party> parties = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -34,11 +36,22 @@
 
     public async void HandleValidSubmit()
     {
-        var result = await Http.PutAsJsonAsync("PartyGuest/" + id, partyGuest);
-        if (result != null)
+        
+        await Http.PutAsJsonAsync("PartyGuest/" + id, partyGuest);
+        parties = await Http.GetFromJsonAsync<List<Party>>("Party");
+        partyGuests = await Http.GetFromJsonAsync<List<PartyGuest>>("PartyGuest");    
+            
+        
+        foreach(var party in parties)
         {
-            UriHelper.NavigateTo("userlist");
+            if (party.PartyHost.PartyGuestID == id)
+            {
+                party.PartyHost = partyGuests.FirstOrDefault(s => s.PartyGuestID == id);
+                await Http.PutAsJsonAsync("Party/" + party.PartyID, party);
+            }
         }
+        UriHelper.NavigateTo("userlist");
+        
         
     }
 }
