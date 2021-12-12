@@ -50,8 +50,18 @@
 
     public async void HandleValidSubmit()
     {
-        party.PartyHost = partyGuests.FirstOrDefault(s => s.PartyGuestID == party.PartyHost.PartyGuestID);
+        if (party.PartyHost.PartyGuestID > 1)
+        {
+            party.PartyHost = partyGuests.FirstOrDefault(s => s.PartyGuestID == party.PartyHost.PartyGuestID);
+        }
+        else
+        {
+            party.PartyHost = partyGuests.FirstOrDefault(s => s.PartyGuestID == 1);
+        }
+
         await Http.PostAsJsonAsync("Party", party);
         UriHelper.NavigateTo("partylist");
+        
+        
     }
 }
