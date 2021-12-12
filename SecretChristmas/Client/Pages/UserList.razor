@@ -20,8 +20,7 @@ else
                 <th></th>
                 <th></th>
                 <th>Party Guest ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
+                <th>Party Guest Name</th>
             </tr>
         </thead>
         <tbody>
@@ -31,8 +30,7 @@ else
                     <td><button @onclick="() => Edit(partyGuest.PartyGuestID)">Edit</button></td>
                     <td><button @onclick="(() => Delete(partyGuest.PartyGuestID))">Delete</button></td>
                     <td>@partyGuest.PartyGuestID</td>
-                    <td>@partyGuest.FirstName</td>
-                    <td>@partyGuest.LastName</td>
+                    <td>@partyGuest.PartyGuestName</td>
                 </tr>
             }
         </tbody>

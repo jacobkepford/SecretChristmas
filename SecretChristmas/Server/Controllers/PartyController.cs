@@ -12,22 +12,19 @@ namespace SecretChristmas.Server.Controllers
         private static PartyGuest host1 = new()
         {
             PartyGuestID = 1,
-            FirstName = "Jacob",
-            LastName = "Kepford",
+            PartyGuestName = "Jacob Kepford"
         };
 
         private static PartyGuest host2 = new()
         {
             PartyGuestID = 2,
-            FirstName = "Bailey",
-            LastName = "Wiles"
+            PartyGuestName = "Bailey Wiles"
         };
 
         private static PartyGuest host3 = new()
         {
             PartyGuestID = 1,
-            FirstName = "Marty",
-            LastName = "Cat"
+            PartyGuestName = "Marty Cat"
         };
 
         private static List<Party> PartyList = new()

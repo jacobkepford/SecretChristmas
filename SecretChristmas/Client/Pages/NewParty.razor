@@ -16,14 +16,13 @@
     </p>
     <p>
         <label>
-            Party Host First Name:
-            <InputText @bind-Value="party.PartyHost.FirstName" />
-        </label>
-    </p>
-    <p>
-        <label>
-            Party Host Last Name:
-            <InputText @bind-Value="party.PartyHost.LastName" />
+            Party Host:
+            <InputSelect @bind-Value="party.PartyHost.PartyGuestID">
+            @foreach (var partyGuest in partyGuests)
+            {
+                <option value="@partyGuest.PartyGuestID">@partyGuest.PartyGuestName</option>
+            }
+            </InputSelect>
         </label>
     </p>
     <p>
@@ -42,9 +41,16 @@
 @code {
 
     private Party party = new();
+    private List<PartyGuest> partyGuests = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        partyGuests = await Http.GetFromJsonAsync<List<PartyGuest>>("PartyGuest");
+    }
 
     public async void HandleValidSubmit()
     {
+        party.PartyHost = partyGuests.FirstOrDefault(s => s.PartyGuestID == party.PartyHost.PartyGuestID);
         await Http.PostAsJsonAsync("Party", party);
         UriHelper.NavigateTo("partylist");
     }

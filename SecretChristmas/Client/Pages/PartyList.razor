@@ -34,7 +34,7 @@ else
                     <td><button @onclick="(() => Delete(party.PartyID))">Delete</button></td>
                     <td>@party.PartyID</td>
                     <td>@party.PartyName</td>
-                    <td>@party.PartyHost.FullName</td>
+                    <td>@party.PartyHost.PartyGuestName</td>
                     <td>@party.PartyDate.ToShortDateString()</td>
                     
                 </tr>

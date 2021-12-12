@@ -10,9 +10,9 @@ namespace SecretChristmas.Server.Controllers
         private readonly ILogger<PartyController> _logger;
         private static List<PartyGuest> PartyGuests = new()
         {
-            new PartyGuest { PartyGuestID = 1, FirstName = "Jacob", LastName = "Kepford" },
-            new PartyGuest { PartyGuestID = 2, FirstName = "Bailey", LastName = "Wiles"  },
-            new PartyGuest { PartyGuestID = 3, FirstName = "Marty", LastName = "Cat" }
+            new PartyGuest { PartyGuestID = 1, PartyGuestName = "Jacob Kepford" },
+            new PartyGuest { PartyGuestID = 2, PartyGuestName = "Bailey Wiles" },
+            new PartyGuest { PartyGuestID = 3, PartyGuestName = "Marty Cat"}
         };
 
         public PartyGuestController(ILogger<PartyController> logger)
@@ -44,8 +44,7 @@ namespace SecretChristmas.Server.Controllers
         public async Task<IActionResult> Update(PartyGuest partyGuest, int id)
         {
             PartyGuest selectedPartyGuest = PartyGuests.FirstOrDefault(s => s.PartyGuestID == id);
-            selectedPartyGuest.FirstName= partyGuest.FirstName;
-            selectedPartyGuest.LastName = partyGuest.LastName;
+            selectedPartyGuest.PartyGuestName= partyGuest.PartyGuestName;
             return Ok(partyGuest);
         }
 

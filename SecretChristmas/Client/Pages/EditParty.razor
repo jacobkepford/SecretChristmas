@@ -27,7 +27,7 @@
             <InputSelect @bind-Value="SelectedHostId">
             @foreach (var partyGuest in partyGuests)
             {
-                <option value="@partyGuest.PartyGuestID">@partyGuest.FullName</option>
+                <option value="@partyGuest.PartyGuestID">@partyGuest.PartyGuestName</option>
             }
             </InputSelect>
         </label>
