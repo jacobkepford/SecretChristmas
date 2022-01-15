@@ -1,0 +1,32 @@
+﻿@page "/newhost"
+@inject HttpClient Http
+@inject NavigationManager UriHelper
+
+<h3>New User</h3>
+
+<EditForm Model="@partyGuest" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <p>
+        <label>
+            Host Name:
+            <InputText @bind-Value="partyGuest.PartyGuestName" />
+        </label>
+    </p>
+    <div>
+        <CancelButton page="userlist"></CancelButton>
+        <button type="submit">Submit</button>
+    </div>
+</EditForm>
+
+@code {
+
+    private PartyGuest partyGuest = new();
+
+    public async void HandleValidSubmit()
+    {
+        await Http.PostAsJsonAsync("PartyGuest", partyGuest);
+        UriHelper.NavigateTo("userlist");
+    }
+}

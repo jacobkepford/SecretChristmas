@@ -1,32 +1,67 @@
-﻿@page "/newuser"
+﻿@page "/newparty"
 @inject HttpClient Http
 @inject NavigationManager UriHelper
 
-<h3>New User</h3>
+<h3>New Host</h3>
 
-<EditForm Model="@partyGuest" OnValidSubmit="@HandleValidSubmit">
+<EditForm Model="@party" OnValidSubmit="@HandleValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
     <p>
         <label>
-            User Name:
-            <InputText @bind-Value="partyGuest.PartyGuestName" />
+            Party Name:
+            <InputText @bind-Value="party.PartyName" />
+        </label>
+    </p>
+    <p>
+        <label>
+            Party Host:
+            <InputSelect @bind-Value="party.PartyHost.PartyGuestID">
+            @foreach (var partyGuest in partyGuests)
+            {
+                <option value="@partyGuest.PartyGuestID">@partyGuest.PartyGuestName</option>
+            }
+            </InputSelect>
+        </label>
+    </p>
+    <p>
+        <label>
+            Party Date:
+            <InputDate @bind-Value="party.PartyDate">
+            </InputDate>
         </label>
     </p>
     <div>
-        <CancelButton page="userlist"></CancelButton>
+        <CancelButton page="partylist"></CancelButton>
         <button type="submit">Submit</button>
     </div>
 </EditForm>
 
 @code {
 
-    private PartyGuest partyGuest = new();
+    private Party party = new();
+    private List<PartyGuest> partyGuests = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        partyGuests = await Http.GetFromJsonAsync<List<PartyGuest>>("PartyGuest");
+    }
 
     public async void HandleValidSubmit()
     {
-        await Http.PostAsJsonAsync("PartyGuest", partyGuest);
-        UriHelper.NavigateTo("userlist");
+        if (party.PartyHost.PartyGuestID > 1)
+        {
+            party.PartyHost = partyGuests.FirstOrDefault(s => s.PartyGuestID == party.PartyHost.PartyGuestID);
+        }
+        else
+        {
+            party.PartyHost = partyGuests.FirstOrDefault(s => s.PartyGuestID == 1);
+        }
+
+        await Http.PostAsJsonAsync("Party", party);
+        UriHelper.NavigateTo("partylist");
+        
+        
     }
 }

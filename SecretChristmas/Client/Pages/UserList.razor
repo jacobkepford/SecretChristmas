@@ -4,9 +4,9 @@
 
 <PageTitle>User List</PageTitle>
 
-<h1>List of users</h1>
+<h1>Hosts</h1>
 
-<button @onclick=NewUser>Add User</button>
+<button @onclick=NewUser>Add Host</button>
 
 @if (partyGuests == null)
 {
@@ -19,8 +19,8 @@ else
             <tr>
                 <th></th>
                 <th></th>
-                <th>Party Guest ID</th>
-                <th>Party Guest Name</th>
+                <th>ID</th>
+                <th>Host Name</th>
             </tr>
         </thead>
         <tbody>
@@ -49,7 +49,7 @@ else
 
     public void NewUser()
     {
-        UriHelper.NavigateTo($"newuser");
+        UriHelper.NavigateTo($"newhost");
     }
 
     public void Edit(int id)
