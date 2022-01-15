@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.ResponseCompression;
+using SecretChristmas.Server.Repositories;
+using SecretChristmas.Server.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.AddScoped<IPartyRepository, PartyRepository>();
 
 var app = builder.Build();
 
