@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SecretChristmas.Server.Repositories.Interfaces;
 using SecretChristmas.Shared;
 
 namespace SecretChristmas.Server.Controllers
@@ -8,51 +9,42 @@ namespace SecretChristmas.Server.Controllers
     public class PartyGuestController : ControllerBase
     {
         private readonly ILogger<PartyController> _logger;
-        private static List<PartyGuest> PartyGuests = new()
-        {
-            new PartyGuest { PartyGuestID = 1, PartyGuestName = "Jacob Kepford" },
-            new PartyGuest { PartyGuestID = 2, PartyGuestName = "Bailey Wiles" },
-            new PartyGuest { PartyGuestID = 3, PartyGuestName = "Marty Cat"}
-        };
+        private readonly IHostRepository _partyHost;
 
-        public PartyGuestController(ILogger<PartyController> logger)
+        public PartyGuestController(ILogger<PartyController> logger, IHostRepository partyHost)
         {
             _logger = logger;
+            _partyHost = partyHost;
         }
 
         [HttpGet]
         public async Task<List<PartyGuest>> Get()
         {
-            return PartyGuests;
+            return _partyHost.GetHosts();
         }
 
         [HttpGet("{id}")]
         public async Task<PartyGuest> Get(int id)
         {
-            PartyGuest selectedPartyGuest = PartyGuests.FirstOrDefault(s => s.PartyGuestID == id);
-            return selectedPartyGuest;
+            return _partyHost.GetPartyHost(id);
         }
 
         [HttpPost]
         public async void Add(PartyGuest partyGuest)
         {
-            partyGuest.PartyGuestID = PartyGuests.Max(s => s.PartyGuestID + 1);
-            PartyGuests.Add(partyGuest);
+            _partyHost.AddPartyHost(partyGuest);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(PartyGuest partyGuest, int id)
+        public async void Update(PartyGuest partyGuest, int id)
         {
-            PartyGuest selectedPartyGuest = PartyGuests.FirstOrDefault(s => s.PartyGuestID == id);
-            selectedPartyGuest.PartyGuestName= partyGuest.PartyGuestName;
-            return Ok(partyGuest);
+            _partyHost.UpdatePartyHost(partyGuest, id);
         }
 
         [HttpDelete("{id}")]
-        public async Task Delete(int id)
+        public async void Delete(int id)
         {
-            PartyGuest selectedPartyGuest = PartyGuests.FirstOrDefault(s => s.PartyGuestID == id);
-            PartyGuests.Remove(selectedPartyGuest);
+            _partyHost.DeletePartyHost(id);
         }
     }
 }
